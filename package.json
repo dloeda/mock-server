@@ -1,0 +1,31 @@
+{
+  "name": "mock-server",
+  "version": "0.0.1",
+  "description": "Mock server for API",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "express": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dloeda/mock-server.git"
+  },
+  "keywords": [
+    "mock",
+    "server",
+    "api",
+    "json",
+    "node"
+  ],
+  "author": "dloeda",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/dloeda/mock-server/issues"
+  },
+  "homepage": "https://github.com/dloeda/mock-server#readme"
+}
