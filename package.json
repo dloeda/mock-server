@@ -9,7 +9,8 @@
     "node": "*"
   },
   "dependencies": {
-    "express": "*"
+    "express": "*",
+    "stdio": "^0.2.7"
   },
   "repository": {
     "type": "git",
