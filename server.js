@@ -1,22 +1,22 @@
-var fs = require('fs');
+/*eslint no-console:1*/
+'use strict';
+
 var express = require('express');
 var config = require('./libs/config');
+var finder = require('./libs/finder');
+var utils = require('./libs/utils');
 var app = express();
 
+app.all('/', function (req, res) {
+  utils.fillResponse(res,
+    finder.getFile(config['conf-folder'], config['info-file']));
+});
+
 app.all('/**', function (req, res) {
-  var path = config.mocks + req.url + '.json';
-  if (fs.existsSync(path)) {
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).send(fs.readFileSync(path).toString());
-  } else {
-    res.status(404).send('Not found');
-  }
+  utils.fillResponse(res,
+    finder.getFile(config.mocks, req.url));
 });
 
-app.all('/**', function (req, res) { 
-  res.status(404).send('Not found');
-});
-
-var server = app.listen(config.port, function () {
-  console.info('Mock server listening at http://localhost:%s',  server.address().port);
+var server = app.listen(config.port, config.ip, function () {
+  console.info('Mock server listening at http://%s:%s', server.address().address, server.address().port);
 });
