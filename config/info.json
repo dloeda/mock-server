@@ -1,0 +1,7 @@
+{
+  "@mock": true,
+
+  "status": "200",
+  "contentType": "text/html",
+  "content": "<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>"
+}
