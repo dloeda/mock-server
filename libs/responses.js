@@ -1,5 +1,7 @@
 'use strict';
 
+var constants = require('./constants');
+
 function getResponse(code, content, contentType) {
   return {
     status: code,
@@ -8,7 +10,7 @@ function getResponse(code, content, contentType) {
   };
 }
 
-function getErrorResponse(code, message) {
+function createErrorResponse(code, message) {
   return getResponse(code, {
     error: {
       code: code,
@@ -17,9 +19,15 @@ function getErrorResponse(code, message) {
   });
 }
 
+function getErrorResponse(type) {
+  var response = createErrorResponse(500, 'Internal server error');
+  if (type === constants['error.not-found']) {
+    response = createErrorResponse(404, 'Not Found');
+  }
+  return response;
+}
+
 module.exports = {
-  200: getResponse(200),
-  404: getErrorResponse(404, 'Not Found'),
-  500: getErrorResponse(500, 'Internal server error'),
-  getResponse: getResponse
+  getResponse: getResponse,
+  getErrorResponse: getErrorResponse
 };

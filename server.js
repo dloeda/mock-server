@@ -1,4 +1,3 @@
-/*eslint no-console:1*/
 'use strict';
 
 var express = require('express');
@@ -9,12 +8,12 @@ var app = express();
 
 app.all('/', function (req, res) {
   utils.fillResponse(res,
-    finder.getFile(config['conf-folder'], config['info-file']));
+    finder.getInfo(config));
 });
 
 app.all('/**', function (req, res) {
   utils.fillResponse(res,
-    finder.getFile(config.mocks, req.url));
+    finder.getFile(config, req));
 });
 
 var server = app.listen(config.port, config.ip, function () {

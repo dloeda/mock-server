@@ -1,4 +1,5 @@
 {
-  "@mock": true,
-  "status": "304"
+  "@mock": {
+    "status": "304"
+  }
 }

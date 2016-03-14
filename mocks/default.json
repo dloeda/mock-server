@@ -1,0 +1,22 @@
+{
+    "@mock": {
+        "status": 500,
+        "contentType": "text/html",
+        "content": "<HTML><HEAD><TITLE>ERROR</TITLE></HEAD><BODY>ERROR</BODY></HTML>",
+        "regex": {
+            "23": {
+                "@file": "asdf/asdf"
+            },
+            "123": {
+                "status": 200
+            },
+            "asd": {
+                "status": 404,
+                "contentType": "application/json",
+                "content": {
+                    "a": "2"
+                }
+            }
+        }
+    }
+}

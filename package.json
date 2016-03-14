@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "express": "*",
+    "glob": "^5.0.14",
     "grunt-cli": "^0.1.13",
     "stdio": "^0.2.7"
   },

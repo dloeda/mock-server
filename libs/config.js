@@ -43,6 +43,8 @@ function readConfigFile(config, args) {
     config['conf-folder'] = args['conf-folder'];
   }
 
+  config['conf-folder'] = './' + config['conf-folder'] + '/';
+
   try {
     fileOptions = require('../' + config['conf-folder'] + config['conf-file'] + '.json');
     parseOptions(config, fileOptions);
@@ -58,8 +60,8 @@ function readConfig() {
   var args = parseArguments();
   var config = {
     'conf-file': 'config',
-    'conf-folder': './config/',
-    'mocks': './mocks/',
+    'conf-folder': 'config',
+    'mocks': 'mocks',
     'info-file': 'info',
     'port': process.env.PORT,
     'ip': process.env.IP
