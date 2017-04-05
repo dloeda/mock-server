@@ -1,10 +1,5 @@
 {
-<<<<<<< HEAD
   "@mock": {
     "status": "304"
   }
-=======
-  "@mock": true,
-  "status": "304"
->>>>>>> 544de844eccab82b3dc11d67e95d8ff0f654c31b
 }

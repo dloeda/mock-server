@@ -21,6 +21,7 @@ function findFile(config, req) {
   var filePath,
     defaultFilePath,
     error = false,
+    method = '.' + req.method.toLowerCase(),
     path,
     type;
 
@@ -31,11 +32,23 @@ function findFile(config, req) {
   }
   defaultFilePath = filePath.substr(0, filePath.lastIndexOf('/')) + '/' + constants['file.name.default'];
 
-  if (fs.existsSync(filePath + constants['file.ext:code'])) {
+  if (fs.existsSync(filePath + method + constants['file.ext:code'])) {
+    path = filePath + method + constants['file.ext:code'];
+    type = constants['content.code'];
+  } else if (fs.existsSync(filePath + method + constants['file.ext:data'])) {
+    path = filePath + method + constants['file.ext:data'];
+    type = constants['content.data'];
+  } else if (fs.existsSync(filePath + constants['file.ext:code'])) {
     path = filePath + constants['file.ext:code'];
     type = constants['content.code'];
   } else if (fs.existsSync(filePath + constants['file.ext:data'])) {
     path = filePath + constants['file.ext:data'];
+    type = constants['content.data'];
+  } else if (fs.existsSync(defaultFilePath + method + constants['file.ext:code'])) {
+    path = defaultFilePath + method + constants['file.ext:code'];
+    type = constants['content.code'];
+  } else if (fs.existsSync(defaultFilePath + method + constants['file.ext:data'])) {
+    path = defaultFilePath + method + constants['file.ext:data'];
     type = constants['content.data'];
   } else if (fs.existsSync(defaultFilePath + constants['file.ext:code'])) {
     path = defaultFilePath + constants['file.ext:code'];

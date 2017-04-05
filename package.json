@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Mock server for API",
   "scripts": {
-    "start": "grunt"
+    "start": "node server.js -p 3000"
   },
   "engines": {
     "node": "*"
@@ -11,7 +11,6 @@
   "dependencies": {
     "express": "*",
     "glob": "^5.0.14",
-    "grunt-cli": "^0.1.13",
     "stdio": "^0.2.7"
   },
   "repository": {
@@ -30,11 +29,5 @@
   "bugs": {
     "url": "https://github.com/dloeda/mock-server/issues"
   },
-  "homepage": "https://github.com/dloeda/mock-server#readme",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-express-server": "^0.5.1",
-    "gruntify-eslint": "^1.0.0"
-  }
+  "homepage": "https://github.com/dloeda/mock-server#readme"
 }
