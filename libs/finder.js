@@ -16,12 +16,27 @@ function composeResponse(data) {
   return response;
 }
 
+function findMock(config, req) {
+  delete require.cache[require.resolve(`.${config['conf-folder']}${config['routes-file']}`)];
+  var routes = require(`.${config['conf-folder']}${config['routes-file']}`);
+  var keyPath = Object.keys(routes).find(key => new RegExp(key).test(req.originalUrl));
+  var path = routes[keyPath];
+  var type = new RegExp(`${constants['file.ext:code']}$`).test(path) ? constants['content.code'] : constants['content.data'];
+
+  return {
+    path,
+    type,
+    error: keyPath ? false : constants['error.not-found']
+  };
+}
+
+
 
 function findFile(config, req) {
   var filePath,
     defaultFilePath,
     error = false,
-    method = '.' + req.method.toLowerCase(),
+    method = '.' + (req.method || '').toLowerCase(),
     path,
     type;
 
@@ -84,6 +99,23 @@ function openFile(config, req) {
   return fileInfo;
 }
 
+function openMock(config, req) {
+  var fileInfo = findMock(config, req);
+
+  if (fileInfo.error) return fileInfo;
+
+  fileInfo.content = fs.readFileSync(fileInfo.path);
+  if (fileInfo.type === constants['content.code']) {
+    fileInfo.context = {
+      req: req,
+      params: req.params,
+      query: req.query,
+      mock: false
+    };
+  }
+  return fileInfo;
+}
+
 function parseFile(file) {
   var response;
   if (file.error) {
@@ -102,6 +134,10 @@ function getFile(config, req) {
   return parseFile(openFile(config, req));
 }
 
+function getMock(config, req) {
+  return parseFile(openMock(config, req));
+}
+
 function getInfo(config) {
   return getFile(config, {
     path: (config['conf-folder'] + config['info-file'])
@@ -110,6 +146,7 @@ function getInfo(config) {
 
 // Exports
 module.exports = {
-  getFile: getFile,
-  getInfo: getInfo
+  getFile,
+  getInfo,
+  getMock
 };

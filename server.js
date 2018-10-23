@@ -14,7 +14,7 @@ app.all('/', function (req, res) {
 
 app.all('/**', function (req, res) {
   utils.fillResponse(res,
-    finder.getFile(config, req));
+    finder.getMock(config, req));
 });
 
 var server = app.listen(config.port, config.ip, function () {

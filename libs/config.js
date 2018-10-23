@@ -9,6 +9,7 @@ function parseArguments() {
     //configuration path
     'conf-file'   : {key: 'c',            args:1, description: 'Name of configuration file'},
     'conf-folder' : {                     args:1, description: 'Path to configuration\'s folder'},
+    'routes-file'      : {                args:1, description: 'Path to routes\'s file'},
     //configuration inline
     'mocks'       : {key: 'mocks-folder', args:1, description: 'Path to mocks\'s folder'},
     'port'        : {key: 'p',            args:1, description: 'Listening port'}
@@ -61,6 +62,7 @@ function readConfig() {
   var config = {
     'conf-file': 'config',
     'conf-folder': 'config',
+    'routes-file': 'routes',
     'mocks': 'mocks',
     'info-file': 'info',
     'port': process.env.PORT,
