@@ -1,5 +1,5 @@
 {
-  "name": "mock-server",
+  "name": "mock-js-server",
   "version": "0.0.1",
   "description": "Mock server for API",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dloeda/mock-server.git"
+    "url": "git+https://github.com/dloeda/mock-server.git"
   },
   "keywords": [
     "mock",
@@ -29,5 +29,6 @@
   "bugs": {
     "url": "https://github.com/dloeda/mock-server/issues"
   },
-  "homepage": "https://github.com/dloeda/mock-server#readme"
+  "homepage": "https://github.com/dloeda/mock-server#readme",
+  "main": "server.js"
 }
