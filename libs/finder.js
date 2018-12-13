@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var p = require('path');
 var vm = require('vm');
 var responses = require('./responses');
 var constants = require('./constants');
@@ -17,10 +18,11 @@ function composeResponse(data) {
 }
 
 function findMock(config, req) {
-  delete require.cache[require.resolve(`.${config['conf-folder']}${config['routes-file']}`)];
-  var routes = require(`.${config['conf-folder']}${config['routes-file']}`);
+  var requirePath = p.resolve(config['conf-folder'], config['routes-file']);
+  delete require.cache[require.resolve(requirePath)];
+  var routes = require(requirePath);
   var keyPath = Object.keys(routes).find(key => new RegExp(key).test(req.originalUrl));
-  var path = routes[keyPath];
+  var path = p.join(config.mocks, routes[keyPath]);
   var type = new RegExp(`${constants['file.ext:code']}$`).test(path) ? constants['content.code'] : constants['content.data'];
 
   return {

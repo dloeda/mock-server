@@ -6,6 +6,11 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/server.js",
+            "args": [
+                "-p", "3000",
+                "--mocks", "./mockxxx",
+                "--conf-folder", "./confxxx"
+            ],
             "outFiles": [
                 "./logs"
             ]
