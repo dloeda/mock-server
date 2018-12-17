@@ -1,4 +1,4 @@
 {
-  "^$": "config/info.json",
-  ".*logs.*": "mocks/user/default.js"
+  "^$": "../config/info.json",
+  ".*logs.*": "user/default.js"
 }

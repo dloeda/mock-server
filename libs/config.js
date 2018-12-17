@@ -12,7 +12,8 @@ function parseArguments() {
     'routes-file'      : {                args:1, description: 'Path to routes\'s file'},
     //configuration inline
     'mocks'       : {key: 'mocks-folder', args:1, description: 'Path to mocks\'s folder'},
-    'port'        : {key: 'p',            args:1, description: 'Listening port'}
+    'port'        : {key: 'p',            args:1, description: 'Listening port'},
+    'delay'       : {key: 'd',            args:1, description: 'Delay in ms'}
   });
 }
 /**
@@ -61,9 +62,9 @@ function readConfig() {
   var args = parseArguments();
   var config = {
     'conf-file': 'config',
-    'conf-folder': 'config',
+    'conf-folder': 'config/',
     'routes-file': 'routes',
-    'mocks': 'mocks',
+    'mocks': 'mocks/',
     'info-file': 'info',
     'port': process.env.PORT,
     'ip': process.env.IP

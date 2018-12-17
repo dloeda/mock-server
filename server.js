@@ -7,6 +7,12 @@ var finder = require('./libs/finder');
 var utils = require('./libs/utils');
 var app = express();
 
+if (config.delay) {
+  app.use((req, res, next) => {
+    setTimeout(() => next(), config.delay);
+  });
+}
+
 app.all('/', function (req, res) {
   utils.fillResponse(res,
     finder.getInfo(config));
