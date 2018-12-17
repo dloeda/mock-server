@@ -18,7 +18,7 @@ function composeResponse(data) {
 }
 
 function findMock(config, req) {
-  let routesPath = `.${config['conf-folder']}${config['routes-file']}`;
+  let routesPath = `${process.cwd()}/${config['conf-folder']}${config['routes-file']}`;
   delete require.cache[require.resolve(routesPath)];
   let routes = require(routesPath);
   let keyPath = Object.keys(routes).find(key => new RegExp(key).test(req.originalUrl));

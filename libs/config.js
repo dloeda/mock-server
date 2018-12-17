@@ -45,10 +45,10 @@ function readConfigFile(config, args) {
     config['conf-folder'] = args['conf-folder'];
   }
 
-  config['conf-folder'] = './' + config['conf-folder'] + '/';
+  config['conf-folder'] =  config['conf-folder'];
 
   try {
-    fileOptions = require('../' + config['conf-folder'] + config['conf-file'] + '.json');
+    fileOptions = require(process.cwd() + '/' + config['conf-folder'] + config['conf-file'] + '.json');
     parseOptions(config, fileOptions);
   } catch (err) {
     console.info('INFO: Cannot find ' + config['conf-folder'] + config['conf-file'] + ' configuration file');
