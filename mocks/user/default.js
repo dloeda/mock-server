@@ -10,6 +10,6 @@ mock = {
 
 if (query) {
   if (query.name && query.surname)
-    mock['@mock'].content.fullname = query.name + ' ' + query.surname
+    mock['@mock'].content.fullname = `${query.name} ${query.surname}`;
 }
 
