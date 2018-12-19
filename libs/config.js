@@ -1,5 +1,7 @@
 'use strict';
 
+const path = require('path');
+
 /**
  * Reads app's arguments and store in a object
  **/
@@ -13,7 +15,7 @@ function parseArguments() {
     //configuration inline
     'mocks'       : {key: 'mocks-folder', args:1, description: 'Path to mocks\'s folder'},
     'port'        : {key: 'p',            args:1, description: 'Listening port'},
-    'delay'       : {key: 'd',            args:1, description: 'Delay in ms'}
+    'delay'       : {key: 'd',            args:1, description: 'Delay all responses in ms'}
   });
 }
 /**
@@ -45,13 +47,11 @@ function readConfigFile(config, args) {
     config['conf-folder'] = args['conf-folder'];
   }
 
-  config['conf-folder'] =  config['conf-folder'];
-
   try {
     fileOptions = require(process.cwd() + '/' + config['conf-folder'] + config['conf-file'] + '.json');
     parseOptions(config, fileOptions);
   } catch (err) {
-    console.info('INFO: Cannot find ' + config['conf-folder'] + config['conf-file'] + ' configuration file');
+    console.info('INFO: Cannot find ' +'.' + path.sep + path.join(config['conf-folder'], config['conf-file'] + '.json') + ' configuration file');
   }
 }
 
