@@ -5,18 +5,24 @@ var express = require('express');
 var config = require('./libs/config');
 var finder = require('./libs/finder');
 var utils = require('./libs/utils');
+var logger = require('./libs/logger');
 var app = express();
 
-app.all('/', function (req, res) {
-  utils.fillResponse(res,
-    finder.getInfo(config));
-});
+if (config.delay) {
+  app.use((req, res, next) =>
+    setTimeout(() => next(), config.delay))
+}
 
-app.all('/**', function (req, res) {
+app.all('/', (req, res) =>
   utils.fillResponse(res,
-    finder.getMock(config, req));
-});
+    finder.getInfo(config)));
 
-var server = app.listen(config.port, config.ip, function () {
-  console.info('Mock server listening at http://%s:%s', server.address().address, server.address().port);
-});
+app.all('/**', (req, res, next) =>
+  next(utils.fillResponse(res,
+    finder.getMock(config, req))))
+
+app.use((req, res) =>
+  logger.log(req, res))
+
+var server = app.listen(config.port, config.ip, () =>
+  console.info('Mock server listening at http://%s:%s', server.address().address, server.address().port))

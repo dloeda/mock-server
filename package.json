@@ -1,6 +1,6 @@
 {
   "name": "mock-js-server",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Mock server for API",
   "scripts": {
     "start": "node server.js -p 3000"

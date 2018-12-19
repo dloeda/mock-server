@@ -47,10 +47,8 @@ function readConfigFile(config, args) {
     config['conf-folder'] = args['conf-folder'];
   }
 
-  // config['conf-folder'] = './' + config['conf-folder'] + '/';
-
   try {
-    fileOptions = require(path.resolve(config['conf-folder'], config['conf-file'] + '.json'));
+    fileOptions = require(process.cwd() + '/' + config['conf-folder'] + config['conf-file'] + '.json');
     parseOptions(config, fileOptions);
   } catch (err) {
     console.info('INFO: Cannot find ' +'.' + path.sep + path.join(config['conf-folder'], config['conf-file'] + '.json') + ' configuration file');
@@ -64,9 +62,9 @@ function readConfig() {
   var args = parseArguments();
   var config = {
     'conf-file': 'config',
-    'conf-folder': 'config',
+    'conf-folder': 'config/',
     'routes-file': 'routes',
-    'mocks': 'mocks',
+    'mocks': 'mocks/',
     'info-file': 'info',
     'port': process.env.PORT,
     'ip': process.env.IP
