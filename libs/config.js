@@ -15,7 +15,8 @@ function parseArguments() {
     //configuration inline
     'mocks'       : {key: 'mocks-folder', args:1, description: 'Path to mocks\'s folder'},
     'port'        : {key: 'p',            args:1, description: 'Listening port'},
-    'delay'       : {key: 'd',            args:1, description: 'Delay all responses in ms'}
+    'delay'       : {key: 'd',            args:1, description: 'Delay all responses in ms'},
+    'verbose'     : {key: 'v',            args:1, description: 'Enable logging'}
   });
 }
 /**

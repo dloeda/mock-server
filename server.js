@@ -21,8 +21,10 @@ app.all('/**', (req, res, next) =>
   next(utils.fillResponse(res,
     finder.getMock(config, req))))
 
-app.use((req, res) =>
-  logger.log(req, res))
+if (config.verbose) {
+  app.use((req, res) =>
+    logger.log(req, res))
+}
 
 var server = app.listen(config.port, config.ip, () =>
   console.info('Mock server listening at http://%s:%s', server.address().address, server.address().port))
