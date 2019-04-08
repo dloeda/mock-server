@@ -20,7 +20,7 @@ function createErrorResponse(code, message) {
 }
 
 function getErrorResponse(type) {
-  var response = createErrorResponse(500, 'Internal server error');
+  let response = createErrorResponse(500, 'Internal server error');
   if (type === constants['error.not-found']) {
     response = createErrorResponse(404, 'Not Found');
   }

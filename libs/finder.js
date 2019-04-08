@@ -6,15 +6,21 @@ const p = require('path');
 const responses = require('./responses');
 const constants = require('./constants');
 
+let CONTEXT = {};
+
 function composeResponse(data) {
-  var mock = data[constants['mock-key']],
-    response;
-  if (mock) {
+  let response;
+  if (data[constants['mock-key']]) {
+    const mock = JSON.parse(JSON.stringify(data[constants['mock-key']]));
+    delete data[constants['mock-key']].status;
+    delete data[constants['mock-key']].content;
+    delete data[constants['mock-key']].contentType;
+    delete data[constants['mock-key']];
     response = responses.getResponse(mock.status, mock.content, mock.contentType);
   } else {
     response = responses.getResponse(200, data);
   }
-  return response;
+  return JSON.parse(JSON.stringify(response));
 }
 
 function findMock(config, req) {
@@ -85,7 +91,7 @@ function findFile(config, req) {
 }
 
 function openFile(config, req) {
-  var fileInfo = findFile(config, req);
+  let fileInfo = findFile(config, req);
 
   if (fileInfo.error) return fileInfo;
 
@@ -102,7 +108,7 @@ function openFile(config, req) {
 }
 
 function openMock(config, req) {
-  var fileInfo = findMock(config, req);
+  let fileInfo = findMock(config, req);
 
   if (fileInfo.error) return fileInfo;
 
@@ -119,17 +125,21 @@ function openMock(config, req) {
 }
 
 function parseFile(file) {
-  var response;
+  let response;
   if (file.error) {
     response = responses.getErrorResponse(file.error);
   } else if (file.type === constants['content.code']) {
-    var script = vm.createScript(file.content);
-    script.runInNewContext(file.context);
+    CONTEXT.script = vm.createScript(file.content);
+    CONTEXT.script.runInNewContext(file.context);
     response = composeResponse(file.context.mock);
+    delete CONTEXT.script;
+    delete file.context.mock;
+    delete file.context;
   } else if (file.type === constants['content.data']) {
     response = composeResponse(JSON.parse(file.content));
   }
-  return response;
+  delete file.content;
+  return JSON.parse(JSON.stringify(response));
 }
 
 function getFile(config, req) {
