@@ -16,9 +16,12 @@ function composeResponse(data) {
     delete data[constants['mock-key']].content;
     delete data[constants['mock-key']].contentType;
     delete data[constants['mock-key']];
-    response = responses.getResponse(mock.status, mock.content, mock.contentType);
+    response = responses.getResponse(mock);
   } else {
-    response = responses.getResponse(200, data);
+    response = responses.getResponse({
+      status: 200,
+      content: data
+    });
   }
   return JSON.parse(JSON.stringify(response));
 }

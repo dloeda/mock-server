@@ -1,4 +1,5 @@
 {
   "^$": "../config/info.json",
+  "cached": "cached.json",
   ".*logs.*": "user/default.js"
 }

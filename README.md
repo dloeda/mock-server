@@ -47,6 +47,17 @@ You must use the ``@mock`` key to add contenType or statusCodel ike this:
 }
 ```
 
+Also you can add a download action to the mock:
+```json
+{
+    "@mock": {
+        "status": 200,
+        "@download": "./LICENSE"
+    }
+}
+```
+
+
 ### Run it
 Just run `npm start` to run it simple or configure as tu want with these options:
 

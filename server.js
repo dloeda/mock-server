@@ -17,9 +17,9 @@ app.all('/', (req, res) =>
   utils.fillResponse(res,
     finder.getInfo(config)));
 
-app.all('/**', (req, res, next) =>
-  next(utils.fillResponse(res,
-    finder.getMock(config, req))))
+app.all('/**', (req, res) =>
+  utils.fillResponse(res,
+    finder.getMock(config, req)))
 
 if (config.verbose) {
   app.use((req, res) =>

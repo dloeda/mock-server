@@ -1,5 +1,6 @@
 {
   "@mock": {
-    "status": "304"
+    "status": "200",
+    "@download": "./LICENSE"
   }
 }

@@ -2,19 +2,33 @@
 
 var constants = require('./constants');
 
-function getResponse(code, content, contentType) {
+function getAction(mock) {
+  var actionKey = Object.keys(mock).find(key => key.startsWith('@'));
+  if (actionKey) {
+    return {
+      key: actionKey.substr(1),
+      value: mock[actionKey]
+    };
+  }
+}
+
+function getResponse(mock = {}) {
   return {
-    status: code,
-    content: content,
-    contentType: contentType || 'application/json'
+    status: mock.status || 200,
+    content: JSON.parse(JSON.stringify(mock.content || {})),
+    contentType: mock.contentType || 'application/json',
+    action: getAction(mock)
   };
 }
 
 function createErrorResponse(code, message) {
-  return getResponse(code, {
-    error: {
-      code: code,
-      message: message
+  return getResponse({
+    status: code,
+    content: {
+      error: {
+        code: code,
+        message: message
+      }
     }
   });
 }
