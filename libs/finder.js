@@ -43,7 +43,7 @@ function findMock(config, req) {
   let type = new RegExp(`${constants['file.ext:code']}$`).test(mockPath) ? constants['content.code'] : constants['content.data'];
 
   return {
-    path: mockPath,
+    path: mockPath || '',
     type,
     error: mockPath ? false : constants['error.not-found']
   };
@@ -53,7 +53,7 @@ function findMockPath(filePath, req, config) {
   delete require.cache[require.resolve(filePath)];
   let routes = require(filePath);
   let keyPath = Object.keys(routes).find(key => new RegExp(key).test(req.originalUrl));
-  return p.join(config.mocks || '', routes[keyPath] || '');
+  return !keyPath ? false : p.join(config.mocks || '', routes[keyPath] || '');
 }
 
 function findFile(config, req) {
