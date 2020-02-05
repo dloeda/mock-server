@@ -1,0 +1,8 @@
+{
+  "@mock": {
+    "status": 500,
+    "content": {
+      "error": "Critical error!"
+    }
+  }
+}

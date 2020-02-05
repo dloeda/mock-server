@@ -8,16 +8,21 @@ var utils = require('./libs/utils');
 var logger = require('./libs/logger');
 var app = express();
 
-app.use((req, res, next) =>
-  setTimeout(() => next(), res.delay || config.delay || 0))
 
-app.all('/', (req, res) =>
+app.options('/**', (_, res) => res.send())
+
+app.use((req, _, next) =>
+  setTimeout(() => {
+    next()
+  }, finder.getMock(config, req).delay || config.delay || 0))
+
+app.all('/', (_, res) =>
   utils.fillResponse(res,
     finder.getInfo(config)));
 
-app.all('/**', (req, res) =>
-  utils.fillResponse(res,
-    finder.getMock(config, req)))
+app.all('/**', (req, res, next) =>
+    next(utils.fillResponse(res,
+      finder.getMock(config, req))))
 
 if (config.verbose) {
   app.use((req, res) =>

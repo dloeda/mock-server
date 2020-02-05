@@ -14,10 +14,11 @@ function getAction(mock) {
 
 function getResponse(mock = {}) {
   return {
-    status: mock.status || 200,
+    action: getAction(mock),
     content: JSON.parse(JSON.stringify(mock.content || {})),
     contentType: mock.contentType || 'application/json',
-    action: getAction(mock)
+    delay: mock.delay || 0,
+    status: mock.status || 200,
   };
 }
 
