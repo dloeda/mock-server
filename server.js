@@ -8,10 +8,8 @@ var utils = require('./libs/utils');
 var logger = require('./libs/logger');
 var app = express();
 
-if (config.delay) {
-  app.use((req, res, next) =>
-    setTimeout(() => next(), config.delay))
-}
+app.use((req, res, next) =>
+  setTimeout(() => next(), res.delay || config.delay || 0))
 
 app.all('/', (req, res) =>
   utils.fillResponse(res,
