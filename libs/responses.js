@@ -18,6 +18,7 @@ function getResponse(mock = {}) {
     content: JSON.parse(JSON.stringify(mock.content || {})),
     contentType: mock.contentType || 'application/json',
     delay: mock.delay || 0,
+    headers: mock.headers || [],
     status: mock.status || 200,
   };
 }

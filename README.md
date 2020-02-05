@@ -57,6 +57,28 @@ Also you can add a download action to the mock:
 }
 ```
 
+Or a delay, to delay the response:
+```json
+{
+    "@mock": {
+        "status": 200,
+        "headers": [
+          "Access-Control-Allow-Origin: *"
+        ]
+    }
+}
+```
+
+Or add extra headers:
+```json
+{
+    "@mock": {
+        "status": 200,
+        "delay": 1200
+    }
+}
+```
+
 
 ### Run it
 Just run `npm start` to run it simple or configure as tu want with these options:
@@ -69,3 +91,4 @@ Just run `npm start` to run it simple or configure as tu want with these options
 | Mock Folder | `--mocks-folder` | `./mocks/` |Path of the mock folder |
 | Port | `-p` | None | Listening port |
 | Delay | `-d` | None | Delay in ms |
+| Headers | `-H` | None | Extra Headers |

@@ -16,7 +16,8 @@ function parseArguments() {
     'mocks'       : {key: 'mocks-folder', args:1, description: 'Path to mocks\'s folder'},
     'port'        : {key: 'p',            args:1, description: 'Listening port'},
     'delay'       : {key: 'd',            args:1, description: 'Delay all responses in ms'},
-    'verbose'     : {key: 'v',            args:1, description: 'Enable logging'}
+    'verbose'     : {key: 'v',            args:1, description: 'Enable logging'},
+    'Headers'     : {key: 'H',            multiple: true, description: 'Add extra headers to all request'}
   });
 }
 /**
@@ -68,7 +69,8 @@ function readConfig() {
     'mocks': 'mocks/',
     'info-file': 'info',
     'port': process.env.PORT,
-    'ip': process.env.IP
+    'ip': process.env.IP,
+    'Headers': []
   };
   readConfigFile(config, args);
   parseOptions(config, args);

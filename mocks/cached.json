@@ -1,7 +1,8 @@
 {
   "@mock": {
     "status": 200,
-    "delay": 1200,
-    "@download": "./LICENSE"
+    "headers": [
+      "Access-Control-Allow-Origin: *"
+    ]
   }
 }

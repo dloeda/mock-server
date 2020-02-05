@@ -8,13 +8,19 @@ var utils = require('./libs/utils');
 var logger = require('./libs/logger');
 var app = express();
 
-
 app.options('/**', (_, res) => res.send())
 
 app.use((req, _, next) =>
   setTimeout(() => {
     next()
   }, finder.getMock(config, req).delay || config.delay || 0))
+
+app.use((req, res, next) => {
+  config.Headers.concat(finder.getMock(config, req).headers)
+    .map(header => header.split(':'))
+    .forEach(header => res.setHeader(header[0], header[1].trim()))
+  next()
+})
 
 app.all('/', (_, res) =>
   utils.fillResponse(res,
