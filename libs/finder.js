@@ -26,22 +26,35 @@ function composeResponse(data) {
   return JSON.parse(JSON.stringify(response));
 }
 
+// Allows to have method based routes files e.g. routes.get, routes.post...
 function findMock(config, req) {
+  let routesMethodPath = p.resolve(process.cwd(), config['conf-folder'], config['routes-file'] + '.' + req.method.toLowerCase());
   let routesPath = p.resolve(process.cwd(), config['conf-folder'], config['routes-file']);
-  delete require.cache[require.resolve(routesPath)];
-  let routes = require(routesPath);
-  let keyPath = Object.keys(routes).find(key => new RegExp(key).test(req.originalUrl));
-  let mockPath = p.join(config.mocks || '', routes[keyPath] || '');
+  let mockPath;
+
+  if (fs.existsSync(routesMethodPath + '.json')) {
+    mockPath  = findMockPath(routesMethodPath, req, config);
+  }
+
+  if (!mockPath) {
+    mockPath  = findMockPath(routesPath, req, config);
+  }
+
   let type = new RegExp(`${constants['file.ext:code']}$`).test(mockPath) ? constants['content.code'] : constants['content.data'];
 
   return {
-    path: mockPath,
+    path: mockPath || '',
     type,
-    error: keyPath ? false : constants['error.not-found']
+    error: mockPath ? false : constants['error.not-found']
   };
 }
 
-
+function findMockPath(filePath, req, config) {
+  delete require.cache[require.resolve(filePath)];
+  let routes = require(filePath);
+  let keyPath = Object.keys(routes).find(key => new RegExp(key).test(req.originalUrl));
+  return !keyPath ? false : p.join(config.mocks || '', routes[keyPath] || '');
+}
 
 function findFile(config, req) {
   var filePath,
