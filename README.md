@@ -57,7 +57,8 @@ Also you can add a download action to the mock:
 }
 ```
 
-Or a delay, to delay the response:
+
+Or add extra headers:
 ```json
 {
     "@mock": {
@@ -69,7 +70,7 @@ Or a delay, to delay the response:
 }
 ```
 
-Or add extra headers:
+Or an option, to delay the response:
 ```json
 {
     "@mock": {
