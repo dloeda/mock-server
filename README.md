@@ -7,7 +7,7 @@ The first step is to configure ``config/routes.json``, where we will map our API
 ```json
 {
   "^$": "../config/info.json",
-  ".*user.*": "user/default.js"
+  ".*user/{{userId}}.*": "user/default.js"
 }
 ```
 
@@ -26,7 +26,8 @@ This wil return JSON response at it's defined in the JSON file.
 ```javascript
 /*globals req, params, query, mock*/
 mock = {
-  'id': Math.floor(Math.random()*1000)
+  'id': Math.floor(Math.random()*1000),
+  'userId': params.userId
 }
 
 if (query) {

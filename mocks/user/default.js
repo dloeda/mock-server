@@ -3,7 +3,8 @@ mock = {
   '@mock': {
     'status': '203',
     'content' : {
-      'id': Math.floor(Math.random()*1000)
+      'id': Math.floor(Math.random()*1000),
+      'params': params
     }
   }
 }

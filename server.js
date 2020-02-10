@@ -13,14 +13,21 @@ setTimeout(() => {
   next()
 }, finder.getMock(config, req).delay || config.delay || 0))
 
-app.use((req, res, next) => {
-  config.Headers.concat(finder.getMock(config, req).headers)
-  .map(header => header.split(':'))
-  .forEach(header => res.setHeader(header[0], header[1].trim()))
+app.use((_, res, next) => {
+  config.Headers
+    .map(header => header.split(':'))
+    .forEach(header => res.setHeader(header[0], header[1].trim()))
   next()
 })
 
 app.options('/**', (_, res) => res.send())
+
+app.use((req, res, next) => {
+  finder.getMock(config, req).headers
+  .map(header => header.split(':'))
+  .forEach(header => res.setHeader(header[0], header[1].trim()))
+  next()
+})
 
 app.all('/', (_, res) =>
   utils.fillResponse(res,

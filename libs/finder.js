@@ -30,30 +30,65 @@ function composeResponse(data) {
 function findMock(config, req) {
   let routesMethodPath = p.resolve(process.cwd(), config['conf-folder'], config['routes-file'] + '.' + req.method.toLowerCase());
   let routesPath = p.resolve(process.cwd(), config['conf-folder'], config['routes-file']);
-  let mockPath;
+  let mockPath = {};
 
   if (fs.existsSync(routesMethodPath + '.json')) {
     mockPath  = findMockPath(routesMethodPath, req, config);
   }
 
-  if (!mockPath) {
+  if (!mockPath.path) {
     mockPath  = findMockPath(routesPath, req, config);
   }
 
-  let type = new RegExp(`${constants['file.ext:code']}$`).test(mockPath) ? constants['content.code'] : constants['content.data'];
+  let type = new RegExp(`${constants['file.ext:code']}$`).test(mockPath.path) ? constants['content.code'] : constants['content.data'];
 
+  let {path, params, query} = mockPath
   return {
-    path: mockPath || '',
+    path,
+    params,
+    query,
     type,
     error: mockPath ? false : constants['error.not-found']
   };
 }
 
+function getRequestParams(req, match) {
+  let parsedUrl = match
+  let replaced = []
+  let idx = 1
+  while(/{{\w+}}/.test(parsedUrl)) {
+    replaced.push(parsedUrl.match(/{{(\w+)}}/)[1] + '=$' + idx++)
+    parsedUrl = parsedUrl.replace(/{{(\w+)}}/, '(.*)')
+  }
+
+  let stringParams = req.path.replace(new RegExp(parsedUrl), replaced.join(','))
+  
+  return stringParams
+    .split(',')
+    .reduce((acc, param) => {
+      let splitted = param.split('=')
+      acc[splitted[0]] = splitted[1]
+      return acc
+    }, {})
+}
+
 function findMockPath(filePath, req, config) {
   delete require.cache[require.resolve(filePath)];
   let routes = require(filePath);
-  let keyPath = Object.keys(routes).find(key => new RegExp(key).test(req.originalUrl));
-  return !keyPath ? false : p.join(config.mocks || '', routes[keyPath] || '');
+  let keyPath = Object.keys(routes).find(
+    key => new RegExp(key.replace(/{{(.*)}}/g, "(.*)"))
+      .test(req.originalUrl) && key);
+
+  
+  let params = getRequestParams(req, keyPath)
+  let path = !keyPath ? false : p.join(config.mocks || '', routes[keyPath] || '')
+  let query = req.query
+
+  return {
+    path,
+    params,
+    query
+  }
 }
 
 function findFile(config, req) {
@@ -132,8 +167,8 @@ function openMock(config, req) {
   if (fileInfo.type === constants['content.code']) {
     fileInfo.context = {
       req: req,
-      params: req.params,
-      query: req.query,
+      params: fileInfo.params,
+      query: fileInfo.query,
       mock: false
     };
   }
