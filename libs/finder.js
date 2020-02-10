@@ -61,7 +61,7 @@ function getRequestParams(req, match) {
     parsedUrl = parsedUrl.replace(/{{(\w+)}}/, '(.*)')
   }
 
-  let stringParams = req.path.replace(new RegExp(parsedUrl), replaced.join(','))
+  let stringParams = req.path.replace(new RegExp(`.*${parsedUrl}.*`), replaced.join(','))
   
   return stringParams
     .split(',')
