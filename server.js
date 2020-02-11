@@ -29,10 +29,6 @@ app.use((req, res, next) => {
   next()
 })
 
-app.all('/', (_, res) =>
-  utils.fillResponse(res,
-    finder.getInfo(config)));
-
 app.all('/**', (req, res, next) =>
     next(utils.fillResponse(res,
       finder.getMock(config, req))))

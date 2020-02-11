@@ -1,5 +1,5 @@
 {
-  "^$": "../config/info.json",
+  "^/$": "../config/info.json",
   "cached": "cached.json",
   ".*logs/{{param1}}/{{param2}}": "user/default.js"
 }
