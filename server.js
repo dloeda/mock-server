@@ -8,6 +8,8 @@ var utils = require('./libs/utils');
 var logger = require('./libs/logger');
 var app = express();
 
+app.use(express.json())
+
 app.use((req, _, next) =>
 setTimeout(() => {
   next()

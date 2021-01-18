@@ -24,7 +24,7 @@ This wil return JSON response at it's defined in the JSON file.
 ```
 ### Execute JS file
 ```javascript
-/*globals req, params, query, mock*/
+/*globals req, params, body, query, mock*/
 mock = {
   'id': Math.floor(Math.random()*1000),
   'userId': params.userId

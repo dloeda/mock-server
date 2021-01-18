@@ -101,6 +101,7 @@ function openMock(config, req) {
     fileInfo.context = {
       req: req,
       params: fileInfo.params,
+      body: req.body,
       query: fileInfo.query,
       mock: false
     };
