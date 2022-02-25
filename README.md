@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/mock-js-server.svg)](https://badge.fury.io/js/mock-js-server)
+
 # mock-js-server
 > A mock server that allow to generate responses by JSONs or JSs files
 
